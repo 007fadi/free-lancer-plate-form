@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Models\Profile;
 use App\Models\Project;
+use App\Models\User;
+use App\Notifications\AcceptOfferNotification;
+use App\Notifications\CommentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Expectation;
@@ -36,7 +39,6 @@ class ProjectController extends Controller
             $project->duration = $request->duration;
             $project->post_id = $request->post_id;
 
-            // $user->notify(new CommentNotification($data));
             if ($project->save()) {
                 return $this->showProviderConfirmation($request->provider_id, $request->offer_id, $project->id, $request->post_id);
             }
@@ -56,27 +58,36 @@ class ProjectController extends Controller
                 'comments.cost',
                 'comments.description as comment_description',
                 'posts.title',
+                'seeker_id',
                 'profiles.name',
                 'posts.description as post_description',
                 'projects.offer_id',
                 'projects.provider_id',
                 'projects.id as project_id'
             )
-            ->join('comments', 'comments.id', '=', 'projects.offer_id')
-            ->join('posts', 'posts.id', '=', 'projects.post_id')
-            ->join('profiles', 'profiles.user_id', '=', 'projects.seeker_id')
-            ->where('comments.is_active', 1)
-            ->where('comments.user_id', $provider_id)
-            ->where('comments.id', $comment_id)
-            ->where('posts.id', $post_id)
-            ->where('projects.id', $project_id)
-            ->first();
+                ->join('comments', 'comments.id', '=', 'projects.offer_id')
+                ->join('posts', 'posts.id', '=', 'projects.post_id')
+                ->join('profiles', 'profiles.user_id', '=', 'projects.seeker_id')
+                ->where('comments.is_active', 1)
+                ->where('comments.user_id', $provider_id)
+                ->where('comments.id', $comment_id)
+                ->where('posts.id', $post_id)
+                ->where('projects.id', $project_id)
+                ->first();
 
+            $user = User::where('id', $provider_id);
+            $profile = Profile::select('name')->where("user_id", $provider_id)->first();
+            $data = [
+                'name' =>  $profile->name,
+                "project_id" => $project_id,
+                "project_title" => $project->title,
+                'message' => __('messages.offer_accept', ["Project" => $project->title]),
+                'url' => url('/confirm-project/' . $project_id . '/' . $project->seeker_id),
+                'userId' => $provider_id
+            ];
             if ($project) {
-                // Notify the provider about the acceptance of the offer
-                $notify = new NotificationController();
-                $notify->AcceptOfferNotification($project);
-
+                $user = User::where('id', $provider_id)->first();
+                $user->notify(new AcceptOfferNotification($data));
                 return redirect()->back()->with(['message' => __('messages.offer_acceptance_message_sent'), 'type' => 'alert-success']);
             } else {
                 return redirect()->back()->with(['message' => __('messages.add_failed_message'), 'type' => 'alert-danger']);
@@ -135,52 +146,52 @@ class ProjectController extends Controller
     function acceptProject($project_id, $seeker_id)
     {
         // try {
-            // notify the provider about the acceptence of the offer
+        // notify the provider about the acceptence of the offer
 
 
-            $project = Project::select(
-                'posts.title',
-                'projects.amount',
-                'projects.totalAmount',
-                'projects.seeker_id',
-                'projects.provider_id',
-                'projects.status',
-                'projects.payment_status',
-            )->join('posts', 'posts.id', 'projects.post_id')
-                ->where('projects.seeker_id', $seeker_id)
-                ->where('projects.id', $project_id)
-                ->where('projects.payment_status', 'unpaid')
-                ->where('projects.status', 'pending')
-                ->first();
-
-
-
-
-            $notify = new NotificationController();
-            $notify->acceptTheProjectNotifiction($project);
-
-            $provider = Profile::where('user_id', $project->provider_id)->first();
-            $limitValue = $provider->limit;
-            if ($limitValue <= 4 && $limitValue > 0) {
-                $provider->limit =  $limitValue - 1;
-            } else {
-                $provider->limit = 0;
-            }
-
-            $provider->save();
-            Project::where('id', $project_id)->update([
-                'status' => 'at_work',
-            ]);
-
-            // Profile::where('user_id', Auth::id())
-            //     ->where('limit', '<=', 4)
-            //     ->where('limit', '>=', 0)
-            //     ->decrement('limit');
+        $project = Project::select(
+            'posts.title',
+            'projects.amount',
+            'projects.totalAmount',
+            'projects.seeker_id',
+            'projects.provider_id',
+            'projects.status',
+            'projects.payment_status',
+        )->join('posts', 'posts.id', 'projects.post_id')
+            ->where('projects.seeker_id', $seeker_id)
+            ->where('projects.id', $project_id)
+            ->where('projects.payment_status', 'unpaid')
+            ->where('projects.status', 'pending')
+            ->first();
 
 
 
-            // return response()->json($seekerNotify);
-            return redirect()->route('profile')->with(['message' => __('messages.acceptance_message_sent'), 'type' => 'alert-success']);
+
+        $notify = new NotificationController();
+        $notify->acceptTheProjectNotifiction($project);
+
+        $provider = Profile::where('user_id', $project->provider_id)->first();
+        $limitValue = $provider->limit;
+        if ($limitValue <= 4 && $limitValue > 0) {
+            $provider->limit =  $limitValue - 1;
+        } else {
+            $provider->limit = 0;
+        }
+
+        $provider->save();
+        Project::where('id', $project_id)->update([
+            'status' => 'at_work',
+        ]);
+
+        // Profile::where('user_id', Auth::id())
+        //     ->where('limit', '<=', 4)
+        //     ->where('limit', '>=', 0)
+        //     ->decrement('limit');
+
+
+
+        // return response()->json($seekerNotify);
+        return redirect()->route('profile')->with(['message' => __('messages.acceptance_message_sent'), 'type' => 'alert-success']);
         // } catch (\Illuminate\Http\Client\ConnectionException $e) {
         //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
         // } catch (\Throwable $th) {

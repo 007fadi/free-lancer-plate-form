@@ -41,7 +41,6 @@ class NotificationController extends Controller
                 'url' => url('posts/details/' . $postOwner->id),
                 'userId' => $postOwner->userid
             ];
-            dd('test');
 
             // Send notification
             Notification::send($user, new CommentNotification($data));
@@ -59,7 +58,7 @@ class NotificationController extends Controller
     function AcceptOffersNotification($projects)
     {
 
-        dd('test');
+
         $providerNotify = User::find($projects->provider_id);
         $data = [
             'project_id' => $projects->project_id,
