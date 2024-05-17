@@ -23,7 +23,7 @@ class ProjectController extends Controller
             'amount.required' => 'المبلغ المتفق عليه مطلوب *',
         ]);
 
-        // try {
+        try {
             $project = new Project();
             $project->seeker_id = Auth::id();
             $project->provider_id = $request->provider_id;
@@ -36,14 +36,15 @@ class ProjectController extends Controller
             $project->duration = $request->duration;
             $project->post_id = $request->post_id;
 
+            // $user->notify(new CommentNotification($data));
             if ($project->save()) {
                 return $this->showProviderConfirmation($request->provider_id, $request->offer_id, $project->id, $request->post_id);
             }
-        // } catch (\Illuminate\Http\Client\ConnectionException $e) {
-        //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
-        // } catch (\Exception $th) {
-        //     return redirect()->back()->with(['message' => __('messages.accept_request_failed'), 'type' => 'alert-danger']);
-        // }
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
+        } catch (\Exception $th) {
+            return redirect()->back()->with(['message' => __('messages.accept_request_failed'), 'type' => 'alert-danger']);
+        }
     }
 
     public function showProviderConfirmation($provider_id, $comment_id, $project_id, $post_id)
@@ -133,7 +134,7 @@ class ProjectController extends Controller
     // if ther use accept the project
     function acceptProject($project_id, $seeker_id)
     {
-        try {
+        // try {
             // notify the provider about the acceptence of the offer
 
 
@@ -180,11 +181,11 @@ class ProjectController extends Controller
 
             // return response()->json($seekerNotify);
             return redirect()->route('profile')->with(['message' => __('messages.acceptance_message_sent'), 'type' => 'alert-success']);
-        } catch (\Illuminate\Http\Client\ConnectionException $e) {
-            return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
-        } catch (\Throwable $th) {
-            return redirect()->route('profile')->with(['message' => __("messages.access.unauthorized"), 'type' => 'alert-danger']);
-        }
+        // } catch (\Illuminate\Http\Client\ConnectionException $e) {
+        //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('profile')->with(['message' => __("messages.access.unauthorized"), 'type' => 'alert-danger']);
+        // }
     }
 
 

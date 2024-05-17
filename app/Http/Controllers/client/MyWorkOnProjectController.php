@@ -21,11 +21,11 @@ class MyWorkOnProjectController extends Controller
     // this function show the my cuurent work table
     function index()
     {
-        // try {
+        try {
             $data = Project::select(
-                'post.id as post_id',
-                'post.title',
-                'post.description',
+                'posts.id as post_id',
+                'posts.title',
+                'posts.description',
                 'projects.duration',
                 'projects.id as project_id',
                 'projects.seeker_id as seeker_id',
@@ -33,29 +33,29 @@ class MyWorkOnProjectController extends Controller
                 'projects.status',
                 'projects.totalAmount as amount',
                 'projects.payment_status',
-            )->get();
-                // ->join('posts', 'posts.id', '=', 'projects.post_id')
-                // ->join('profiles', 'profiles.user_id', '=', 'projects.seeker_id')
+            )
+                ->join('posts', 'posts.id', '=', 'projects.post_id')
+                ->join('profiles', 'profiles.user_id', '=', 'projects.seeker_id')
 
                 // ->where('projects.status', 'at_work')
                 // ->orWhere('projects.status', 'done')
                 // ->orWhere('projects.status', 'nonrecevied')
-                // ->where('posts.is_active', 1)
-                // // ->where('projects.provider_id', Auth::id())
-                // ->where('projects.finshed', 0)
+                ->where('posts.is_active', 1)
+                // ->where('projects.provider_id', Auth::id())
+                ->where('projects.finshed', 0)->get();
 
 
-            dd($data);
+            // dd($data);
             // return response()->json($data);
-        //     if (empty($data)) {
-        //         return back()->with(['message' => __('messages.page_not_found'), 'type' => 'alert-danger']);
-        //     } else
-        //         return view('client.projects.myProjects')->with('data', $data);
-        // } catch (\Illuminate\Http\Client\ConnectionException $e) {
-        //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
-        // } catch (\Exception $th) {
-        //     return back()->with(['message' =>  __('messages.page_not_found'), 'type' => 'alert-danger']);
-        // }
+            if (empty($data)) {
+                return back()->with(['message' => __('messages.page_not_found'), 'type' => 'alert-danger']);
+            } else
+                return view('client.projects.myProjects')->with('data', $data);
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
+        } catch (\Exception $th) {
+            return back()->with(['message' =>  __('messages.page_not_found'), 'type' => 'alert-danger']);
+        }
     }
 
 
@@ -97,7 +97,7 @@ class MyWorkOnProjectController extends Controller
     // this table send the project to the owner
     function markAsDone(Request $request)
     {
-        try {
+        // try {
             $project_id = $request->project_id;
             $seeker_id = $request->seeker_id;
             // send notification
@@ -115,7 +115,7 @@ class MyWorkOnProjectController extends Controller
                 if (!empty($request->url)) {
                     $project->url = $request->url;
                 }
-                if (!empty($request->upload) && !empty($request->url))
+                if (empty($request->upload) && empty($request->url))
                     return redirect()->back()->with(['message' => 'رجاء قم بارسال الملفات المطلوبه او اضغط على طريقه اخرى', 'type' => 'alert-danger']);
             }
 
@@ -128,11 +128,11 @@ class MyWorkOnProjectController extends Controller
 
             // return response()->json($project);
             return back()->with(['message' => 'تم تسليم المشروع رجاء انتظر الطرف الاخر', 'type' => 'alert-success']);
-        } catch (\Illuminate\Http\Client\ConnectionException $e) {
-            return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
-        } catch (\Throwable $th) {
-            return back()->with(['message' =>  __('messages.page_not_found'), 'type' => 'alert-danger']);
-        }
+        // } catch (\Illuminate\Http\Client\ConnectionException $e) {
+        //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
+        // } catch (\Throwable $th) {
+        //     return back()->with(['message' =>  __('messages.page_not_found'), 'type' => 'alert-danger']);
+        // }
     }
 
 

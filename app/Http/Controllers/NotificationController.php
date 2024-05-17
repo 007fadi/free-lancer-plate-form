@@ -82,7 +82,7 @@ class NotificationController extends Controller
 
 
         $providerNotify->notify(new AcceptOfferNotification($data));
-        $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
+        // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
 
 
@@ -110,7 +110,7 @@ class NotificationController extends Controller
 
 
         $seekerNotify->notify(new AcceptProjectNotification($data));
-        $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
+        // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
 
 
@@ -138,7 +138,7 @@ class NotificationController extends Controller
         );
 
         $providerNotify->notify(new RejectProjectNotification($data));
-        $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
+        // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
 
     function sendTheProjectNotifiction($project)
@@ -168,7 +168,7 @@ class NotificationController extends Controller
             $options
         );
         $seeker->notify(new MarkAsDoneNotification($data));
-        $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
+        // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
         // } catch (\Throwable $th) {
         //     //throw $th;
         // }
@@ -197,7 +197,7 @@ class NotificationController extends Controller
             $options
         );
         $providerNotify->notify(new MarkAsAcceptReceviceNotification($data));
-        $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
+        // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
 
     function markAsRejectNotifiction($project,  $profile, $post)
@@ -223,6 +223,6 @@ class NotificationController extends Controller
             $options
         );
         $user->notify(new MarkAsRejectReceviceNotification($data));
-        $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
+        // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
 }

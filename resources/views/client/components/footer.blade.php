@@ -6,9 +6,9 @@
         <!-- title -->
         <div class="w-12/12 md:w-6/12">
             <div class="flex flex-col justify-center h-full px-5 md:px-20">
-                <h1 class="logo-font font-4xl">
+                <a href="{{ route('home') }}" class="logo-font font-4xl">
                     {{ __('static.title') }}
-                </h1>
+                </a>
                 <p class="mt-4">
                     {{ __('static.descrption1') }}
                     <br />

@@ -6,11 +6,12 @@
         class="flex  items-center justify-between md:flex-rowflex-col md:flex-row  w-full h-fit p-3 px-8"
         :class="{ 'shadow-lg flex-col border-md': isOpen, '': !isOpen }">
         <div class=" flex justify-between md:w-fit w-full">
-            <div class="logo-font">
+            <a href="{{ route('home') }}" class="logo-font">
                 <p>
                     {{ __('static.title') }}
                 </p>
-            </div>
+            </a>
+
             <!-- toggle menu  -->
             <!-- <div class="inline md:hidden cursor-pointer" @click="isNavOpend = !isNavOpend">close</div> -->
             <button @click="isOpen = !isOpen" type="button"

@@ -32,6 +32,7 @@ use App\Http\Controllers\client\ChatController;
 use App\Http\Controllers\client\ContactController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\payment\PaymentController;
+use App\Http\Middleware\LanguageSwitcher;
 use App\Models\Project;
 use App\Models\User;
 use Pusher\Pusher;
@@ -83,7 +84,7 @@ Route::post('/change-language', [LanguageController::class, 'switch'])->name('La
 
 
 
-Route::group([], function () {
+Route::group(['middleware' => [LanguageSwitcher::class]], function () {
     //  mywallet view
 
     //
@@ -232,7 +233,6 @@ Route::group([], function () {
         Route::get('/inbox', [ChatController::class, 'index'])->name('inbox.index');
         Route::get('/inbox/{id}', [ChatController::class, 'show'])->name('inbox.show');
         Route::post('/send-message/{sender}', [ChatController::class, 'sendMessage'])->name('sendMessage');
-
     });
 
 
