@@ -134,7 +134,9 @@ Route::group(['middleware' => [LanguageSwitcher::class]], function () {
 
     // check if the user is login in
     Route::group(['middleware' => ['auth', 'role:provider|seeker']], function () {
-
+        Route::post('/mark-notifications-as-read', function () {
+            return response()->json(['success' => markNotificationsAsRead()]);
+        });
         // ----------------------------------------------------------------
         // user must be vaild
         // ----------------------------------------------------------------
