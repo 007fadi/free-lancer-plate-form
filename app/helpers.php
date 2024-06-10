@@ -63,5 +63,6 @@ function markNotificationsAsRead()
         $user->unreadNotifications->markAsRead();
         return true;
     }
+
     return false;
 }

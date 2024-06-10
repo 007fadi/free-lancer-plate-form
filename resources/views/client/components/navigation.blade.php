@@ -13,6 +13,7 @@
             </a>
 
             <!-- toggle menu  -->
+
             <!-- <div class="inline md:hidden cursor-pointer" @click="isNavOpend = !isNavOpend">close</div> -->
             <button @click="isOpen = !isOpen" type="button"
                 class="block md:hidden px-2 text-gray-500 hover:text-white focus:outline-none focus:text-white"
