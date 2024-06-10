@@ -46,10 +46,12 @@
                                                         <div>
                                                             <small class="text-gray-600"> {{ $user->last_activity }}
                                                             </small>
+                                                       
                                                             @if (filled($not_seen))
                                                                 <span class="bg-red-50 p-4 text-black-50 rounded-full">
                                                                     {{ $not_seen->count() }}</span>
                                                             @endif
+                                                 
                                                         </div>
                                                     </div>
                                                 </div>
