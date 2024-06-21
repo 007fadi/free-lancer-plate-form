@@ -20,8 +20,8 @@
 
                                     <div class="flex-1 h-full my-8 overflow-auto px-2 scrollbar" id="style-7">
                                         @foreach ($users as $user)
-                                            @php$not_seen =
-                                                    \App\Models\Messages::where('user_id', $user->id)
+                                            @php
+                                                $not_seen =\App\Models\Messages::where('user_id', $user->id)
                                                         ->where('receiver', auth()->id())
                                                         ->where('is_seen', false)
                                                     ->get() ?? null; @endphp
@@ -46,12 +46,12 @@
                                                         <div>
                                                             <small class="text-gray-600"> {{ $user->last_activity }}
                                                             </small>
-                                                       
+
                                                             @if (filled($not_seen))
                                                                 <span class="bg-red-50 p-4 text-black-50 rounded-full">
                                                                     {{ $not_seen->count() }}</span>
                                                             @endif
-                                                 
+
                                                         </div>
                                                     </div>
                                                 </div>

@@ -362,4 +362,16 @@ return [
     //create user
     "with_google" => "With Google",
 
+
+    // conform  project and  pyment
+    'payment_title' => 'Payment for Project',
+    'payment_method' => 'Payment Method',
+    'credit_card' => 'Credit Card',
+    'paypal' => 'PayPal',
+    'bank_transfer' => 'Bank Transfer',
+    'card_number' => 'Card Number',
+    'complete_payment' => 'Complete Payment',
+    'close' => 'Close',
+
+
 ];

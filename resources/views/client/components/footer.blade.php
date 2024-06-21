@@ -77,6 +77,6 @@
 </footer>
 <hr class="my-4 border-gray sm:mx-auto dark:border-primary-light-gray lg:my-8" />
 <span class="block text-sm text-gray-500 sm:text-center dark:text-dark-gray">© 2022 <a href="https://flowbite.com"
-        class="hover:underline">Motofer</a>. All Rights Reserved.
+        class="hover:underline"> {{ __('static.title') }}</a>. All Rights Reserved.
 </span>
 <!-- end of the page -->
