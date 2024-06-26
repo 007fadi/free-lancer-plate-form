@@ -97,7 +97,7 @@ class MyWorkOnProjectController extends Controller
     // this table send the project to the owner
     function markAsDone(Request $request)
     {
-        // try {
+        try {
             $project_id = $request->project_id;
             $seeker_id = $request->seeker_id;
             // send notification
@@ -128,11 +128,11 @@ class MyWorkOnProjectController extends Controller
 
             // return response()->json($project);
             return back()->with(['message' => 'تم تسليم المشروع رجاء انتظر الطرف الاخر', 'type' => 'alert-success']);
-        // } catch (\Illuminate\Http\Client\ConnectionException $e) {
-        //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
-        // } catch (\Throwable $th) {
-        //     return back()->with(['message' =>  __('messages.page_not_found'), 'type' => 'alert-danger']);
-        // }
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
+        } catch (\Throwable $th) {
+            return back()->with(['message' =>  __('messages.page_not_found'), 'type' => 'alert-danger']);
+        }
     }
 
 

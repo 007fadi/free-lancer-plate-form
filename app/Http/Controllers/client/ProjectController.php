@@ -26,7 +26,9 @@ class ProjectController extends Controller
             'amount.required' => 'المبلغ المتفق عليه مطلوب *',
         ]);
 
+
         try {
+
             $project = new Project();
             $project->seeker_id = Auth::id();
             $project->provider_id = $request->provider_id;
@@ -40,6 +42,7 @@ class ProjectController extends Controller
             $project->post_id = $request->post_id;
 
             if ($project->save()) {
+
                 return $this->showProviderConfirmation($request->provider_id, $request->offer_id, $project->id, $request->post_id);
             }
         } catch (\Illuminate\Http\Client\ConnectionException $e) {

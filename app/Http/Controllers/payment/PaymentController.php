@@ -80,7 +80,7 @@ class PaymentController extends Controller
 
     function doPayment($project_id, $seeker_id)
     {
-        // try {
+        try {
         $project = Project::select(
             'posts.title',
             'projects.amount',
@@ -121,14 +121,14 @@ class PaymentController extends Controller
         // Redirect to success URL with invoice reference
         return redirect($next_url)->with(['invoice_reference' => $invoice_reference]);
 
-        // } catch (\Throwable $th) {
-        //     return redirect()->route('profile')->with(['message' => __("message.access.unauthorized"), 'type' => 'alert-danger']);
-        // }
+        } catch (\Throwable $th) {
+            return redirect()->route('profile')->with(['message' => __("message.access.unauthorized"), 'type' => 'alert-danger']);
+        }
     }
 
     public static function successPayment($project_id,  $response)
     {
-        // try {
+        try {
             $project = Project::select(
                 'posts.title',
                 'projects.amount',
@@ -170,12 +170,12 @@ class PaymentController extends Controller
             // send notification for the seeker that the money is already خصمت
             // return redirect()->route('profile')->with(['message' => 'لقد تم سداد المبلغ بنجاح', 'type' => 'alert-success']);
             // open the frontend page
-        // } catch (\Illuminate\Http\Client\ConnectionException $e) {
-        //     return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        //     return redirect()->route('profile')->with(['message' => __('messages.access.unauthorized'), 'type' => 'alert-danger']);
-        // }
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            return redirect()->back()->with(['message' => __('messages.time_limit_exceeded'), 'type' => 'alert-success']);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('profile')->with(['message' => __('messages.access.unauthorized'), 'type' => 'alert-danger']);
+        }
     }
 
     // if the payment is cancled
