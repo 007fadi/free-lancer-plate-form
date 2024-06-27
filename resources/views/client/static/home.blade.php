@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <title>Motahh</title>
+    <title>{{ __('static.title') }}</title>
 </head>
 
 <body class=" @if (session()->get('lang') == 'en') dir-en) @else dir-ar @endif" style="background-color:#f2f2f2;">
