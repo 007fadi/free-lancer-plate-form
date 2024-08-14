@@ -365,7 +365,7 @@ return [
     'payment_title' => 'الدفع للمشروع',
     'payment_method' => 'طريقة الدفع',
     'credit_card' => 'بطاقة ائتمان',
-    'paypal' => 'باي بال',
+    'paypal' => 'paypal',
     'bank_transfer' => 'تحويل بنكي',
     'card_number' => 'رقم البطاقة',
     'complete_payment' => 'إتمام الدفع',
