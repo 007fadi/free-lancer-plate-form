@@ -18,7 +18,7 @@ class WalletController extends Controller
     function index()
     {
         $admin = User::find(1);
-        $balance  = $admin->balance;
+
         $projectsFee = ModelsProject::selectRaw('sum(amount - totalAmount) as fee')
             ->where('finshed', 1)
             ->where('payment_status', 'received')
@@ -73,15 +73,17 @@ class WalletController extends Controller
                 // ->where('to_id', $wallet->id)
                 ->where('from_id', $wallet_id->id)
                 ->get();
-
-                  // return response()->json($transactions);
-        return view('admin.wallet.wallet', [
-            'balance' => $balance, 'fee' => $projectsFee->fee,    'deposit' => $transactions_to_owner,
-            'withdraw' => $transactions_from_owner
-        ]);
+                $balance  = $wallet_id->balance;
+            // return response()->json($transactions);
+            return view('admin.wallet.wallet', [
+                'balance' => $balance,
+                'fee' => $projectsFee->fee,
+                'deposit' => $transactions_to_owner,
+                'withdraw' => $transactions_from_owner
+            ]);
         }
-        $messge='Not found Data';
+        $messge = 'Not found Data';
         // return response()->json($transactions);
-        return view('admin.wallet.wallet' ,compact( 'messge'));
+        return view('admin.wallet.wallet', compact('messge'));
     }
 }

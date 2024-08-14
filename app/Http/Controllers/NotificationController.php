@@ -72,12 +72,12 @@ class NotificationController extends Controller
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
 
 
         $providerNotify->notify(new AcceptOfferNotification($data));
@@ -100,12 +100,12 @@ class NotificationController extends Controller
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
 
 
         $seekerNotify->notify(new AcceptProjectNotification($data));
@@ -129,12 +129,12 @@ class NotificationController extends Controller
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
 
         $providerNotify->notify(new RejectProjectNotification($data));
         // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
@@ -160,12 +160,12 @@ class NotificationController extends Controller
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
         $seeker->notify(new MarkAsDoneNotification($data));
         // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
         // } catch (\Throwable $th) {
@@ -189,12 +189,12 @@ class NotificationController extends Controller
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
         $providerNotify->notify(new MarkAsAcceptReceviceNotification($data));
         // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
@@ -215,12 +215,12 @@ class NotificationController extends Controller
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
         $user->notify(new MarkAsRejectReceviceNotification($data));
         // $pusher->trigger('channel-name', 'App\\Events\\CommentEvents', $data);
     }
